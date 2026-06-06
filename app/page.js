@@ -1,70 +1,105 @@
-import Image from "next/image";
+"use client";
+import React, { useState } from 'react';
+import { Shield, ShieldAlert, Radio, Signal, Network, HardDrive, List, Layers, CheckCircle } from 'lucide-react';
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState('overview');
+
+  const systems = [
+    { id: 1, name: 'Main Gate Cam 01', type: 'CCTV IP', status: 'Online', signal: 'Excellent' },
+    { id: 2, name: 'Warehouse Wireless Bridge', type: 'PtP Network', status: 'Online', signal: '95%' },
+    { id: 3, name: 'Backyard Dome Cam 02', type: 'CCTV Analog', status: 'Offline', signal: 'No Signal' },
+    { id: 4, name: 'Office Main Router', type: 'Gateway', status: 'Online', signal: 'Stable' },
+  ];
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans flex flex-col md:flex-row">
+      <aside className="w-full md:w-64 bg-zinc-900 border-b md:border-b-0 md:border-r border-zinc-800 p-6 flex flex-col gap-6">
+        <div className="flex items-center gap-3">
+          <Shield className="w-8 h-8 text-blue-500" />
+          <div>
+            <h1 className="text-xl font-bold tracking-tight text-white">Retail Shield</h1>
+            <span className="text-xs text-zinc-500 font-medium">Smart Surveillance v1.0</span>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        <nav className="flex flex-col gap-2 mt-4">
+          <button 
+            onClick={() => setActiveTab('overview')}
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${activeTab === 'overview' ? 'bg-blue-600 text-white' : 'text-zinc-400 hover:bg-zinc-800'}`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <Layers className="w-4 h-4" /> System Overview
+          </button>
+          <button 
+            onClick={() => setActiveTab('devices')}
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${activeTab === 'devices' ? 'bg-blue-600 text-white' : 'text-zinc-400 hover:bg-zinc-800'}`}
           >
-            Documentation
-          </a>
-        </div>
+            <Radio className="w-4 h-4" /> Wireless & CCTV Nodes
+          </button>
+        </nav>
+      </aside>
+
+      <main className="flex-1 p-6 md:p-10 max-w-5xl">
+        {activeTab === 'overview' ? (
+          <div className="flex flex-col gap-6">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight text-white">System Status</h2>
+              <p className="text-sm text-zinc-400 mt-1">Real-time surveillance network infrastructure tracking.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl flex items-center gap-4">
+                <div className="p-3 bg-blue-500/10 rounded-xl text-blue-500"><Network className="w-6 h-6" /></div>
+                <div>
+                  <div className="text-xs text-zinc-500 font-medium uppercase">Network Links</div>
+                  <div className="text-xl font-bold text-white mt-0.5">Active</div>
+                </div>
+              </div>
+              <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl flex items-center gap-4">
+                <div className="p-3 bg-emerald-500/10 rounded-xl text-emerald-500"><Signal className="w-6 h-6" /></div>
+                <div>
+                  <div className="text-xs text-zinc-500 font-medium uppercase">Wireless Health</div>
+                  <div className="text-xl font-bold text-white mt-0.5">98.2%</div>
+                </div>
+              </div>
+              <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl flex items-center gap-4">
+                <div className="p-3 bg-amber-500/10 rounded-xl text-amber-500"><HardDrive className="w-6 h-6" /></div>
+                <div>
+                  <div className="text-xs text-zinc-500 font-medium uppercase">Storage Array</div>
+                  <div className="text-xl font-bold text-white mt-0.5">14.2 TB Free</div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
+              <h3 className="text-base font-semibold text-white mb-4 flex items-center gap-2">
+                <List className="w-4 h-4 text-zinc-400" /> Infrastructure Node Directory
+              </h3>
+              <div className="divide-y divide-zinc-800 text-sm">
+                {systems.map((sys) => (
+                  <div key={sys.id} className="py-3.5 flex items-center justify-between">
+                    <div>
+                      <div className="font-medium text-zinc-200">{sys.name}</div>
+                      <div className="text-xs text-zinc-500">{sys.type}</div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-xs text-zinc-400 font-mono">{sys.signal}</span>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${sys.status === 'Online' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-rose-500/10 text-rose-400'}`}>
+                        {sys.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-6">
+            <h2 className="text-2xl font-bold tracking-tight text-white">Device Configuration</h2>
+            <div className="bg-zinc-900 border border-zinc-800 p-8 rounded-2xl text-center text-zinc-500">
+              <ShieldAlert className="w-8 h-8 text-zinc-600 mx-auto mb-3" />
+              Connect database to unlock parameters.
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
 }
- 
-X
-// Fresh Rebuild Trigger
-
-
